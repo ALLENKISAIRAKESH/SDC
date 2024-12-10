@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dynamic Frames</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            color: #ecf0f1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        h3 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1200px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Links Section */
+        .links {
+            flex: 1 1 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .links a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 30px;
+            color: #fff;
+            background: linear-gradient(90deg, #f39c12, #d35400);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-45deg);
+            transition: left 0.3s ease;
+        }
+
+        .links a:hover {
+            transform: scale(1.1);
+        }
+
+        .links a:hover::before {
+            left: 100%;
+        }
+
+        /* Frames Section */
+        .frames {
+            flex: 2 1 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .frame {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            min-height: 140px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .frame.empty {
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewY(-10deg);
+            transition: top 0.5s ease;
+        }
+
+        .frame:hover::before {
+            top: 0;
+        }
+
+        .frame.empty::before {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .frame:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .frames {
+                width: 100%;
+            }
+
+            .frame {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h3>Discover the Dynamic Frames</h3>
+    <div class="container">
+        <!-- Navigation Links -->
+        <div class="links">
+            <a href="#" onclick="fillFrame('frame1', '🌐 Networks: Imagine a web where people, devices, and data connect seamlessly across the globe, powering everything from emails to smart cities.')">🌐 Dive Into the World of Networks</a>
+            <a href="#" onclick="fillFrame('frame2', '🔬 Simulation: Step into a digital universe where complex systems come alive, allowing us to test, explore, and innovate without boundaries.')">🔬 Explore Virtual Simulations</a>
+        </div>
+
+        <!-- Frames to Populate -->
+        <div class="frames">
+            <div id="frame1" class="frame empty">Click "Dive Into the World of Networks" to explore global connectivity!</div>
+            <div id="frame2" class="frame empty">Click "Explore Virtual Simulations" to experience virtual innovation!</div>
+        </div>
+    </div>
+
+    <script>
+        function fillFrame(frameId, content) {
+            const frame = document.getElementById(frameId);
+            frame.textContent = content;
+            frame.classList.remove('empty');
+        }
+    </script>
+</body>
+</html>
