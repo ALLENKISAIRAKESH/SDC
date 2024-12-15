@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2025</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #ffda79;
+            text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.8);
+            animation: textGlow 2s infinite alternate;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 40px;
+            color: #ffb3ba;
+            animation: fadeIn 4s ease-in-out;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 2em;
+        }
+
+        .countdown div {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        .countdown div span {
+            display: block;
+            font-size: 1.5em;
+            margin-top: 5px;
+            color: #ffe57f;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 1.5em;
+            animation: fadeIn 3s ease-in-out;
+            color: #ffdf91;
+        }
+
+        .year-transition {
+            font-size: 3em;
+            margin-top: 20px;
+            animation: transitionText 3s ease-in-out infinite alternate;
+            color: #f8c471;
+            text-shadow: 0 0 20px #ff6f61;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px #ffda79, 0 0 20px #ffbf00, 0 0 30px #ffd700;
+            }
+            to {
+                text-shadow: 0 0 20px #ffe066, 0 0 30px #ffeb3b, 0 0 40px #ffeb99;
+            }
+        }
+
+        @keyframes transitionText {
+            0% {
+                content: '2024';
+            }
+            100% {
+                content: '2025';
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .confetti span {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .fireworks {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy New Year 2025!</h1>
+        <h2>Countdown to 2025:</h2>
+        <div class="countdown">
+            <div>
+                <span id="days">00</span>
+                Days
+            </div>
+            <div>
+                <span id="hours">00</span>
+                Hours
+            </div>
+            <div>
+                <span id="minutes">00</span>
+                Minutes
+            </div>
+            <div>
+                <span id="seconds">00</span>
+                Seconds
+            </div>
+        </div>
+        <div class="footer">Wishing you a joyous and prosperous 2025!</div>
+        <div class="year-transition">2024 → 2025</div>
+    </div>
+    <div class="confetti"></div>
+    <div class="fireworks"></div>
+
+    <script>
+        // Countdown Timer Script
+        const targetDate = new Date('January 1, 2025 00:00:00').getTime();
+        const countdown = document.querySelector('.countdown');
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (timeLeft < 0) {
+                clearInterval(timer);
+                countdown.innerHTML = '<h2>Happy New Year 2025!</h2>';
+            }
+        }
+
+        const timer = setInterval(updateCountdown, 1000);
+
+        // Confetti Effect
+        const confettiContainer = document.querySelector('.confetti');
+
+        for (let i = 0; i < 200; i++) {
+            const confetti = document.createElement('span');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+            confetti.style.background = `hsl(${Math.random() * 360}, 70%, 50%)`;
+            confettiContainer.appendChild(confetti);
+        }
+
+        // Fireworks Effect
+        const fireworksContainer = document.querySelector('.fireworks');
+
+        setInterval(() => {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            firework.style.left = Math.random() * 100 + 'vw';
+            firework.style.top = Math.random() * 100 + 'vh';
+            firework.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+            fireworksContainer.appendChild(firework);
+
+            setTimeout(() => firework.remove(), 1500);
+        }, 500);
+    </script>
+</body>
+</html>
