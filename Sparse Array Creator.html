@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparse Array Example</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 20px;
+        background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4);
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 2.8rem;
+        text-shadow: 3px 3px 6px #f7cac9;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-size: 1.2rem;
+        margin: 10px 0 5px;
+        color: #34495e;
+    }
+
+    input {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 2px solid #34495e;
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        border-color: #ff6b6b;
+        box-shadow: 0 0 10px #ff6b6b;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #34495e;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin: 5px;
+    }
+
+    button:hover {
+        background-color: #ff6b6b;
+        transform: scale(1.1);
+    }
+
+    #result {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fefefe;
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        color: #34495e;
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .highlight {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Sparse Array Creator</h1>
+    </header>
+
+    <main>
+        <form id="arrayForm">
+            <label for="value1">Enter Value 1:</label>
+            <input type="text" id="value1" placeholder="Enter the value" />
+            <label for="value2">Enter Value 2:</label>
+            <input type="text" id="value2" placeholder="Enter the value" />
+            <label for="value3">Enter Value 3:</label>
+            <input type="text" id="value3" placeholder="Enter the value" />
+            <label for="value4">Enter Value 4:</label>
+            <input type="text" id="value4" placeholder="Enter the value" />
+            <label for="value5">Enter Value 5:</label>
+            <input type="text" id="value5" placeholder="Enter the value" />
+        </form>
+
+        <button id="createArrayButton">Create Sparse Array</button>
+        <button id="resetButton">Reset</button>
+
+        <section id="result"></section>
+    </main>
+
+    <script>
+        // Automatically move cursor to the next input field on Enter
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach((input, index) => {
+            input.addEventListener('keypress', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    } else {
+                        document.getElementById('createArrayButton').focus();
+                    }
+                }
+            });
+        });
+
+        // Handle button click to create and manipulate the sparse array
+        document.getElementById('createArrayButton').addEventListener('click', function () {
+            // Get values from the textboxes
+            const values = Array.from(inputs).map(input => input.value.trim());
+
+            // Create a sparse array
+            const sparseArray = values.filter(value => value !== '');
+
+            // Use Array methods
+            sparseArray.sort(); // Sort the array
+            const lastValue = sparseArray.pop(); // Remove the last element
+            sparseArray.push('New Value'); // Add a new value
+            sparseArray.reverse(); // Reverse the array
+            const joinedString = sparseArray.join(', '); // Join array elements into a string
+
+            // Display results
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>Results of Sparse Array Operations:</h3>
+                <p>Original Values: <span class="highlight">${values.join(', ')}</span></p>
+                <p>Sparse Array: <span class="highlight">${sparseArray.join(', ')}</span></p>
+                <p>Last Value Removed: <span class="highlight">${lastValue}</span></p>
+                <p>New Value Added: <span class="highlight">'New Value'</span></p>
+                <p>Reversed Sparse Array: <span class="highlight">${sparseArray.join(', ')}</span></p>
+                <p>Joined String: <span class="highlight">${joinedString}</span></p>
+            `;
+        });
+
+        // Handle reset button to clear all inputs and results
+        document.getElementById('resetButton').addEventListener('click', function () {
+            inputs.forEach(input => input.value = '');
+            document.getElementById('result').innerHTML = '';
+            inputs[0].focus();
+        });
+    </script>
+</body>
+</html>
