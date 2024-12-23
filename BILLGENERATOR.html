@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Generator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(240, 240, 255);
+      color: rgb(40, 40, 40);
+    }
+    header {
+      background-color: rgb(54, 162, 235);
+      color: white;
+      text-align: center;
+      padding: 30px;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 20px;
+    }
+    h3 {
+      color: rgb(54, 162, 235);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid rgb(200, 200, 200);
+      border-radius: 5px;
+      background-color: rgb(240, 240, 240);
+      font-size: 1em;
+      color: rgb(50, 50, 50);
+      box-sizing: border-box;
+      transition: background-color 0.5s ease, transform 0.3s ease-in-out;
+    }
+    input[type="text"]:focus, input[type="number"]:focus {
+      background-color: rgb(255, 223, 186);
+    }
+    input[type="number"]:focus {
+      transform: scale(1.05);
+    }
+    button {
+      background-color: rgb(255, 87, 34);
+      color: white;
+      border: none;
+      padding: 15px;
+      width: 100%;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 1.2em;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: rgb(255, 69, 0);
+    }
+    #result {
+      margin-top: 30px;
+      border-top: 3px solid rgb(54, 162, 235);
+      padding-top: 20px;
+      background-color: rgb(245, 245, 245);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: rgb(250, 250, 255);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      border: 1px solid rgb(220, 220, 220);
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: rgb(54, 162, 235);
+      color: white;
+    }
+    td {
+      background-color: rgb(250, 250, 250);
+    }
+    .total {
+      font-weight: bold;
+      background-color: rgb(236, 239, 241);
+    }
+    .btn-clear {
+      background-color: rgb(0, 188, 212);
+      color: white;
+      padding: 12px;
+      width: 100%;
+      margin-top: 15px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 1.1em;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    .btn-clear:hover {
+      background-color: rgb(0, 150, 136);
+    }
+    .animation-row {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bill Generator</h1>
+</header>
+
+<main>
+  <section id="items">
+    <h3>Enter Details for 5 Items</h3>
+    <label for="item1">Item 1 Name:</label>
+    <input type="text" id="item1" placeholder="Item Name" />
+    <label for="price1">Price:</label>
+    <input type="number" id="price1" placeholder="Price" step="0.01" /><br><br>
+
+    <label for="item2">Item 2 Name:</label>
+    <input type="text" id="item2" placeholder="Item Name" />
+    <label for="price2">Price:</label>
+    <input type="number" id="price2" placeholder="Price" step="0.01" /><br><br>
+
+    <label for="item3">Item 3 Name:</label>
+    <input type="text" id="item3" placeholder="Item Name" />
+    <label for="price3">Price:</label>
+    <input type="number" id="price3" placeholder="Price" step="0.01" /><br><br>
+
+    <label for="item4">Item 4 Name:</label>
+    <input type="text" id="item4" placeholder="Item Name" />
+    <label for="price4">Price:</label>
+    <input type="number" id="price4" placeholder="Price" step="0.01" /><br><br>
+
+    <label for="item5">Item 5 Name:</label>
+    <input type="text" id="item5" placeholder="Item Name" />
+    <label for="price5">Price:</label>
+    <input type="number" id="price5" placeholder="Price" step="0.01" /><br><br>
+  </section>
+
+  <button id="generateBillButton">Generate Bill</button>
+  <button class="btn-clear" id="clearButton">Clear Form</button>
+
+  <section id="result"></section>
+</main>
+
+<script>
+document.getElementById('generateBillButton').addEventListener('click', function() {
+  const items = [];
+  let total = 0;
+  
+  for (let i = 1; i <= 5; i++) {
+    const itemName = document.getElementById(`item${i}`).value;
+    const itemPrice = parseFloat(document.getElementById(`price${i}`).value);
+    
+    if (itemName && !isNaN(itemPrice)) {
+      items.push({ name: itemName, price: itemPrice });
+      total += itemPrice;
+    }
+  }
+  
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = '';
+  
+  if (items.length > 0) {
+    resultDiv.innerHTML += `<h3>Bill:</h3>`;
+    resultDiv.innerHTML += `<table>`;
+    
+    // Only the total is shown as "Total: ₹<amount>"
+    setTimeout(() => {
+      resultDiv.innerHTML += 
+        `<tr class="animation-row total"><td><strong>Total:</strong></td><td><strong>₹${total.toFixed(2)}</strong></td></tr>`;
+    }, 300 * items.length); // Adjust this for delay based on items count
+    
+    resultDiv.innerHTML += `</table>`;
+  } else {
+    resultDiv.innerHTML = 'Please enter at least one item.';
+  }
+});
+
+document.getElementById('clearButton').addEventListener('click', function() {
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById(`item${i}`).value = '';
+    document.getElementById(`price${i}`).value = '';
+  }
+  document.getElementById('result').innerHTML = '';
+});
+
+document.querySelectorAll('input').forEach(input => {
+  input.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const nextInput = input.nextElementSibling ? input.nextElementSibling.nextElementSibling : input;
+      nextInput.focus();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
