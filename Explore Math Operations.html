@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Object Example</title>
+<style>
+    @keyframes gradientBG {
+        0% { background: linear-gradient(135deg, #ff007f, #7f00ff); }
+        50% { background: linear-gradient(135deg, #7f00ff, #007fff); }
+        100% { background: linear-gradient(135deg, #007fff, #ff007f); }
+    }
+
+    @keyframes buttonGlow {
+        0%, 100% { box-shadow: 0 0 10px #fff, 0 0 20px #ff007f, 0 0 30px #7f00ff; }
+        50% { box-shadow: 0 0 15px #ff007f, 0 0 30px #007fff, 0 0 45px #7f00ff; }
+    }
+
+    body {
+        font-family: 'Poppins', Arial, sans-serif;
+        margin: 20px;
+        animation: gradientBG 5s infinite alternate;
+        background-size: 400% 400%;
+        color: #f0f0f0;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        color: #fff;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 1.4rem;
+        color: #fff;
+    }
+
+    input[type="number"] {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 1.2rem;
+        width: 280px;
+        margin-top: 10px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        background: linear-gradient(90deg, #ff007f, #7f00ff);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        animation: buttonGlow 2s infinite;
+    }
+
+    button:hover {
+        background: linear-gradient(90deg, #7f00ff, #007fff);
+    }
+
+    #result {
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin: 8px 0;
+        color: #fffb96;
+    }
+
+    .highlight {
+        color: #00ffab;
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        input[type="number"] {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+    <h1>Explore Math Operations</h1>
+    <label for="numberInput">Enter a value:</label><br>
+    <input type="number" id="numberInput" step="any" placeholder="Enter a value" /><br>
+    <button id="calculateButton">Show Results</button>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', function() {
+            const number = parseFloat(document.getElementById('numberInput').value);
+            const resultDiv = document.getElementById('result');
+
+            if (!isNaN(number)) {
+                const roundedCeil = Math.ceil(number);
+                const roundedFloor = Math.floor(number);
+                const roundedRound = Math.round(number);
+                const cosine = Math.cos(number);
+                const sine = Math.sin(number);
+                const squareRoot = number >= 0 ? Math.sqrt(number) : 'Not Defined';
+
+                resultDiv.innerHTML = `
+                    <h3>Results:</h3>
+                    <p>Original Number: <span class="highlight">${number}</span></p>
+                    <p>Ceiling (Math.ceil): <span class="highlight">${roundedCeil}</span></p>
+                    <p>Floor (Math.floor): <span class="highlight">${roundedFloor}</span></p>
+                    <p>Rounded (Math.round): <span class="highlight">${roundedRound}</span></p>
+                    <p>Cosine (Math.cos): <span class="highlight">${cosine.toFixed(4)}</span></p>
+                    <p>Sine (Math.sin): <span class="highlight">${sine.toFixed(4)}</span></p>
+                    <p>Square Root (Math.sqrt): <span class="highlight">${squareRoot}</span></p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p class="highlight">Please enter a valid number.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
